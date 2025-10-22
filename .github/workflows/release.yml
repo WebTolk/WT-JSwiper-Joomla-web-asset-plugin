@@ -24,7 +24,7 @@ jobs:
 
       - name: Download Swiper files
         run: |
-          # Папки media/css и media/js уже существуют, как сказано в задании
+          mkdir -p media/css media/js
           RELEASE_NUM=${{ env.LATEST_RELEASE }}
           CSS_URL="https://cdn.jsdelivr.net/npm/swiper@$RELEASE_NUM/swiper-bundle.min.css"
           JS_URL="https://cdn.jsdelivr.net/npm/swiper@$RELEASE_NUM/swiper-bundle.min.js"
@@ -34,24 +34,22 @@ jobs:
           curl -L $JS_URL -o media/js/swiper-bundle.min.js
           curl -L $MAP_URL -o media/js/swiper-bundle.min.js.map
 
-      - name: Prepare Build Variables
+      - name: Update version and date in XML file
         run: |
-          BUILD_DATE=$(date +%d.%m.%Y)
-          BUILD_YEAR=$(date +%Y)
-          echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
-          echo "BUILD_YEAR=$BUILD_YEAR" >> $GITHUB_ENV
-          echo "BUILD_VERSION=${{ env.LATEST_RELEASE }}" >> $GITHUB_ENV
+          # Обновляем версию и дату в wtjswiper.xml
+          sed -i "s/<version>[^<]*<\/version>/<version>${{ env.LATEST_RELEASE }}<\/version>/" wtjswiper.xml
+          BUILD_DATE=$(date +%Y-%m-%d)
+          sed -i "s/<creationDate>[^<]*<\/creationDate>/<creationDate>$BUILD_DATE<\/creationDate>/" wtjswiper.xml
 
-      # Объединённый шаг для замены плейсхолдеров во всех текстовых файлах, включая XML, JSON, PHP
-      - name: Update placeholders in all text files
+      - name: Update version in joomla.asset.json
         run: |
-          # Заменяем плейсхолдеры во всех текстовых файлах
-          # Ищем файлы с расширениями, обычно являющиеся текстовыми, или без расширения
-          # Можно расширить список, если нужно учитывать другие
-          # Включаем *.xml, *.json, *.php, *.js, *.css, и другие из предыдущего примера
-          find . -type f \( -name "*.txt" -o -name "*.md" -o -name "*.xml" -o -name "*.json" -o -name "*.js" -o -name "*.css" -o -name "*.php" -o -name "*.html" -o -name "*.yml" -o -name "*.yaml" -o -name "*.ini" -o -name "*.sql" -o -name "*.sh" -o -name "*.py" -o -name "*.rb" -o -name "*.pl" -o -name "*.go" -o -name "*.ts" -o -name "*.jsx" -o -name "*.tsx" -o -name "*.vue" -o -name "*.twig" -o -name "*.blade.php" -o -name "*.scss" -o -name "*.less" -o -name "*.cfg" -o -name "*.conf" -o -name "*.properties" -o -name "*.log" -o -name "*.csv" -o -name "*.tsv" -o -name "*.sql" -o -name "*.txt~" -o -name "*.bak" -o -name "*.*" ! -name "*.exe" ! -name "*.bin" ! -name "*.so" ! -name "*.dll" ! -name "*.jar" ! -name "*.war" ! -name "*.zip" ! -name "*.tar" ! -name "*.gz" ! -name "*.bz2" ! -name "*.xz" ! -name "*.7z" ! -name "*.rar" ! -name "*.dmg" ! -name "*.pkg" ! -name "*.deb" ! -name "*.rpm" \) -exec grep -Iq . {} \; -exec sed -i "s/BUILD_DATE/${{ env.BUILD_DATE }}/g" {} \;
-          find . -type f \( -name "*.txt" -o -name "*.md" -o -name "*.xml" -o -name "*.json" -o -name "*.js" -o -name "*.css" -o -name "*.php" -o -name "*.html" -o -name "*.yml" -o -name "*.yaml" -o -name "*.ini" -o -name "*.sql" -o -name "*.sh" -o -name "*.py" -o -name "*.rb" -o -name "*.pl" -o -name "*.go" -o -name "*.ts" -o -name "*.jsx" -o -name "*.tsx" -o -name "*.vue" -o -name "*.twig" -o -name "*.blade.php" -o -name "*.scss" -o -name "*.less" -o -name "*.cfg" -o -name "*.conf" -o -name "*.properties" -o -name "*.log" -o -name "*.csv" -o -name "*.tsv" -o -name "*.sql" -o -name "*.txt~" -o -name "*.bak" -o -name "*.*" ! -name "*.exe" ! -name "*.bin" ! -name "*.so" ! -name "*.dll" ! -name "*.jar" ! -name "*.war" ! -name "*.zip" ! -name "*.tar" ! -name "*.gz" ! -name "*.bz2" ! -name "*.xz" ! -name "*.7z" ! -name "*.rar" ! -name "*.dmg" ! -name "*.pkg" ! -name "*.deb" ! -name "*.rpm" \) -exec grep -Iq . {} \; -exec sed -i "s/BUILD_YEAR/${{ env.BUILD_YEAR }}/g" {} \;
-          find . -type f \( -name "*.txt" -o -name "*.md" -o -name "*.xml" -o -name "*.json" -o -name "*.js" -o -name "*.css" -o -name "*.php" -o -name "*.html" -o -name "*.yml" -o -name "*.yaml" -o -name "*.ini" -o -name "*.sql" -o -name "*.sh" -o -name "*.py" -o -name "*.rb" -o -name "*.pl" -o -name "*.go" -o -name "*.ts" -o -name "*.jsx" -o -name "*.tsx" -o -name "*.vue" -o -name "*.twig" -o -name "*.blade.php" -o -name "*.scss" -o -name "*.less" -o -name "*.cfg" -o -name "*.conf" -o -name "*.properties" -o -name "*.log" -o -name "*.csv" -o -name "*.tsv" -o -name "*.sql" -o -name "*.txt~" -o -name "*.bak" -o -name "*.*" ! -name "*.exe" ! -name "*.bin" ! -name "*.so" ! -name "*.dll" ! -name "*.jar" ! -name "*.war" ! -name "*.zip" ! -name "*.tar" ! -name "*.gz" ! -name "*.bz2" ! -name "*.xz" ! -name "*.7z" ! -name "*.rar" ! -name "*.dmg" ! -name "*.pkg" ! -name "*.deb" ! -name "*.rpm" \) -exec grep -Iq . {} \; -exec sed -i "s/BUILD_VERSION/${{ env.LATEST_RELEASE }}/g" {} \;
+          # Обновляем все поля "version" в joomla.asset.json
+          sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"${{ env.LATEST_RELEASE }}\"/g" media/joomla.asset.json
+
+      - name: Update @version in PHP files
+        run: |
+          # Находим все PHP файлы и заменяем @version
+          find . -name "*.php" -type f -exec sed -i "s/@version .*/@version ${{ env.LATEST_RELEASE }}/g" {} \;
 
       - name: Commit and push changes
         run: |
@@ -63,18 +61,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Этот шаг создает релиз в *вашем* репозитории плагина Joomla
-      # Он выполняется *после* всех изменений и коммита
-      - name: Create Release in Plugin Repository
+      - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ env.LATEST_RELEASE }} # Используем версию Swiper как тег для релиза
-          release_name: "Plugin Release v${{ env.LATEST_RELEASE }}" # Название релиза
-          body: | # Тело релиза (опционально)
-            This release updates the Swiper library to version ${{ env.LATEST_RELEASE }}.
-            - Updated Swiper CSS, JS, and map files.
-            - Updated version placeholders across all relevant files.
-          draft: false # Релиз не является черновиком
-          prerelease: false # Релиз не является предварительным
+          tag_name: v${{ env.LATEST_RELEASE }}
+          release_name: "Release v${{ env.LATEST_RELEASE }}"
+          draft: false
+          prerelease: false
