@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" method="upgrade">
+	<name>System - WT JSwiper</name>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>12.09.2025</creationDate>
+	<copyright>(C) 2022-2025 Sergey Tolkachyov.</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<authorUrl>https://web-tolk.ru</authorUrl>
+	<version>12.0.2</version>
+	<description>PLG_WTJSWIPER_DESC</description>
+	<namespace path="src">Joomla\Plugin\System\Wtjswiper</namespace>
+	<scriptfile>script.php</scriptfile>
+	<files>
+		<folder plugin="wtjswiper">src</folder>
+		<folder>language</folder>
+		<folder>services</folder>
+	</files>
+	<languages folder="language" client="administrator">
+		<language tag="en-GB">en-GB/plg_system_wtjswiper.ini</language>
+		<language tag="ru-RU">ru-RU/plg_system_wtjswiper.ini</language>
+		<language tag="en-GB">en-GB/plg_system_wtjswiper.sys.ini</language>
+		<language tag="ru-RU">ru-RU/plg_system_wtjswiper.sys.ini</language>
+	</languages>
+	<media folder="media" destination="plg_system_wtjswiper">
+		<folder>js</folder>
+		<folder>css</folder>
+		<filename>joomla.asset.json</filename>
+	</media>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field addfieldprefix="Joomla\Plugin\System\Wtjswiper\Fields" type="plugininfo" name="plugininfo"/>
+				<field type="note" name="wtjswiper_second_desc" label="PLG_WTJSWIPER_SECOND_DESC_LABEL" description="PLG_WTJSWIPER_SECOND_DESC" class="alert alert-info"/>
+			</fieldset>
+		</fields>
+	</config>
+	<updateservers>
+		<server type="extension" name="WebTolk - WT JSwiper">https://web-tolk.ru/component/swjprojects/jupdate?element=wtjswiper</server>
+	</updateservers>
+	<changelogurl>https://web-tolk.ru/jchangelog?element=wtjswiper</changelogurl>
+</extension>

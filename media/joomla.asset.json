@@ -1,0 +1,61 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "swiper",
+  "version": "12.0.2",
+  "description": "Swiper js library",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "swiper-bundle",
+      "type": "script",
+      "uri": "plg_system_wtjswiper/swiper-bundle.min.js",
+      "attributes": {
+        "defer": true
+      },
+      "package": "swiper",
+      "version": "12.0.2"
+    },
+    {
+      "name": "swiper-bundle",
+      "type": "style",
+      "uri": "plg_system_wtjswiper/swiper-bundle.min.css",
+      "package": "swiper",
+      "version": "12.0.2"
+    },
+    {
+      "name": "swiper-bundle",
+      "type": "preset",
+      "uri": "",
+      "dependencies": [
+        "swiper-bundle#style",
+        "swiper-bundle#script"
+      ]
+    },
+	{
+      "name": "swiper-bundle-remote",
+      "type": "script",
+      "uri": "https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js",
+      "attributes": {
+        "defer": true
+      },
+      "package": "swiper",
+      "version": "12.0.2"
+    },
+    {
+      "name": "swiper-bundle-remote",
+      "type": "style",
+      "uri": "https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css",
+      "package": "swiper",
+      "version": "12.0.2"
+    },
+    {
+      "name": "swiper-bundle-remote",
+      "type": "preset",
+      "uri": "",
+      "dependencies": [
+        "swiper-bundle-remote#style",
+        "swiper-bundle-remote#script"
+      ]
+    }
+  ]
+}
