@@ -73,8 +73,7 @@ jobs:
           release_name: "Plugin Release v${{ env.LATEST_RELEASE }}" # Название релиза
           body: | # Тело релиза (опционально)
             This release updates the Swiper library to version ${{ env.LATEST_RELEASE }}.
-            - Updated Swiper CSS, JS, and map files.
-            - Updated version placeholders across all relevant files.
+            - Updated Swiper CSS, JS, and map files to v.${{ env.LATEST_RELEASE }}.
           draft: false # Релиз не является черновиком
           prerelease: false # Релиз не является предварительным
 
