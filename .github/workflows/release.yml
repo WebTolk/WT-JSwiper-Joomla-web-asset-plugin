@@ -1,0 +1,72 @@
+name: Release Swiper Plugin
+
+on:
+  schedule:
+    # Проверяем обновления Swiper каждый день в полночь
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Позволяет запустить вручную
+
+jobs:
+  check-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Используем токен для коммитов
+
+      - name: Get latest Swiper release
+        id: get_swiper_release
+        run: |
+          LATEST_RELEASE=$(curl -s https://api.github.com/repos/nolimits4web/swiper/releases/latest | jq -r .tag_name | sed 's/^v//')
+          echo "LATEST_RELEASE=$LATEST_RELEASE" >> $GITHUB_ENV
+          echo "Found latest Swiper release: $LATEST_RELEASE"
+
+      - name: Download Swiper files
+        run: |
+          mkdir -p media/css media/js
+          RELEASE_NUM=${{ env.LATEST_RELEASE }}
+          CSS_URL="https://cdn.jsdelivr.net/npm/swiper@$RELEASE_NUM/swiper-bundle.min.css"
+          JS_URL="https://cdn.jsdelivr.net/npm/swiper@$RELEASE_NUM/swiper-bundle.min.js"
+          MAP_URL="https://cdn.jsdelivr.net/npm/swiper@$RELEASE_NUM/swiper-bundle.min.js.map"
+
+          curl -L $CSS_URL -o media/css/swiper-bundle.min.css
+          curl -L $JS_URL -o media/js/swiper-bundle.min.js
+          curl -L $MAP_URL -o media/js/swiper-bundle.min.js.map
+
+      - name: Update version and date in XML file
+        run: |
+          # Обновляем версию и дату в wtjswiper.xml
+          sed -i "s/<version>[^<]*<\/version>/<version>${{ env.LATEST_RELEASE }}<\/version>/" wtjswiper.xml
+          BUILD_DATE=$(date +%Y-%m-%d)
+          sed -i "s/<creationDate>[^<]*<\/creationDate>/<creationDate>$BUILD_DATE<\/creationDate>/" wtjswiper.xml
+
+      - name: Update version in joomla.asset.json
+        run: |
+          # Обновляем все поля "version" в joomla.asset.json
+          sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"${{ env.LATEST_RELEASE }}\"/g" media/joomla.asset.json
+
+      - name: Update @version in PHP files
+        run: |
+          # Находим все PHP файлы и заменяем @version
+          find . -name "*.php" -type f -exec sed -i "s/@version .*/@version ${{ env.LATEST_RELEASE }}/g" {} \;
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit -m "Update Swiper to v${{ env.LATEST_RELEASE }}" || exit 0 # Не фейлится, если нет изменений
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.LATEST_RELEASE }}
+          release_name: "Release v${{ env.LATEST_RELEASE }}"
+          draft: false
+          prerelease: false

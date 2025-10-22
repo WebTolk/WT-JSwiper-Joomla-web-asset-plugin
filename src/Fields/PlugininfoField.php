@@ -1,11 +1,11 @@
 <?php
 /**
- * @package     WebTolk plugin info field
- * @version     1.1.0
- * @Author 		Sergey Tolkachyov, https://web-tolk.ru
- * @copyright   Copyright (C) 2020 Sergey Tolkachyov
- * @license     GNU/GPL http://www.gnu.org/licenses/gpl-2.0.html
- * @since 		1.0.0
+ * @package       System - WT JSwiper
+ * @version       BUILD_VERSION
+ * @Author        Sergey Tolkachyov, https://web-tolk.ru
+ * @copyright     Copyright (C) 2022-BUILD_YEAR Sergey Tolkachyov
+ * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @since         1.0.0
  */
 
 namespace Joomla\Plugin\System\Wtjswiper\Fields;

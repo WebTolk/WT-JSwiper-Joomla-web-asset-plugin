@@ -1,12 +1,14 @@
 <?php
-
 /**
- *  @package   WT Masonry.js
- *  @copyright Copyright Sergey Tolkachyov, <https://web-tolk.ru>
- *  @license   GNU General Public License version 3, or later
+ * @package       System - WT JSwiper
+ * @version       BUILD_VERSION
+ * @Author        Sergey Tolkachyov, https://web-tolk.ru
+ * @copyright     Copyright (C) 2022-BUILD_YEAR Sergey Tolkachyov
+ * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @since         1.0.0
  */
 
-defined('_JEXEC') || die;
+\defined('_JEXEC') || die;
 
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;

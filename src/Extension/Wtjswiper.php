@@ -1,10 +1,13 @@
 <?php
 /**
- * @package     WT Swiper.js
- * @copyright   (C) 2023 Sergey Tolkachyov <https://web-tolk.ru>
- * @link
- * @license     GNU General Public License version 3 or later
+ * @package       System - WT JSwiper
+ * @version       BUILD_VERSION
+ * @Author        Sergey Tolkachyov, https://web-tolk.ru
+ * @copyright     Copyright (C) 2022-BUILD_YEAR Sergey Tolkachyov
+ * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @since         1.0.0
  */
+
 namespace Joomla\Plugin\System\Wtjswiper\Extension;
 
 defined('_JEXEC') or die;
@@ -14,7 +17,7 @@ use Joomla\Event\SubscriberInterface;
 use Joomla\CMS\WebAsset\WebAssetRegistry;
 use Joomla\CMS\Factory;
 
-class Wtjswiper extends CMSPlugin implements SubscriberInterface
+final class Wtjswiper extends CMSPlugin implements SubscriberInterface
 {
     /**
      * Load the language file on instantiation.

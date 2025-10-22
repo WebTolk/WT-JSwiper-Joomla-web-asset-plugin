@@ -2,12 +2,12 @@
 <extension type="plugin" group="system" method="upgrade">
 	<name>System - WT JSwiper</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>12.09.2025</creationDate>
-	<copyright>(C) 2022-2025 Sergey Tolkachyov.</copyright>
+	<creationDate>BUILD_DATE</creationDate>
+	<copyright>(C) 2022-BUILD_YEAR Sergey Tolkachyov.</copyright>
 	<license>GNU General Public License version 2 or later</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://web-tolk.ru</authorUrl>
-	<version>12.0.2</version>
+	<version>BUILD_VERSION</version>
 	<description>PLG_WTJSWIPER_DESC</description>
 	<namespace path="src">Joomla\Plugin\System\Wtjswiper</namespace>
 	<scriptfile>script.php</scriptfile>

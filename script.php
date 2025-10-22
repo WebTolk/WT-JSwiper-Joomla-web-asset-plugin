@@ -1,11 +1,13 @@
 <?php
 /**
- * @package       WT JSwiper
- * @author        Sergey Tolkachyov info@web-tolk.ru https://web-tolk.ru
- * @copyright     Copyright (C) 2024 Sergey Tolkachyov. All rights reserved.
- * @license       GNU General Public License version 3 or later
- * @version       11.2.0
+ * @package       System - WT JSwiper
+ * @version       BUILD_VERSION
+ * @Author        Sergey Tolkachyov, https://web-tolk.ru
+ * @copyright     Copyright (C) 2022-BUILD_YEAR Sergey Tolkachyov
+ * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
+ * @since         1.0.0
  */
+
 declare(strict_types=1);
 
 use Joomla\CMS\Application\AdministratorApplication;
