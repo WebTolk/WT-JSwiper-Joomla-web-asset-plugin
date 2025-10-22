@@ -9,6 +9,7 @@ on:
 jobs:
   check-and-release:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - name: Checkout current repository
         uses: actions/checkout@v4
@@ -57,8 +58,8 @@ jobs:
       - name: Create ZIP archive
         run: |
           ZIP_NAME="wtjswiper_${{ env.LATEST_RELEASE }}.zip"
-          # Создаём архив, включая все файлы из репозитория, но исключая .git и сам workflow файл
-          zip -r "$ZIP_NAME" . -x ".git/*" ".github/workflows/release.yml" "**/.git/*" "**/node_modules/*" "**/vendor/*" # Добавьте другие исключения при необходимости
+          # Создаём архив, включая все файлы из репозитория, но исключая .git, .github, README.md, LICENSE и другие указанные
+          zip -r "$ZIP_NAME" . -x ".git/*" ".github/*" "README.md" "LICENSE" ".github/workflows/release.yml" "**/.git/*" "**/node_modules/*" "**/vendor/*" # Добавьте другие исключения при необходимости
           echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
 
       # Этот шаг создает релиз в *вашем* репозитории плагина Joomla и прикрепляет ZIP
@@ -68,7 +69,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ env.LATEST_RELEASE }} # Используем версию Swiper как тег для релиза
+          tag_name: v.${{ env.LATEST_RELEASE }} # Используем версию Swiper как тег для релиза
           release_name: "Plugin Release v${{ env.LATEST_RELEASE }}" # Название релиза
           body: | # Тело релиза (опционально)
             This release updates the Swiper library to version ${{ env.LATEST_RELEASE }}.
