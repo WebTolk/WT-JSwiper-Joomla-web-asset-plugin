@@ -69,11 +69,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v.${{ env.LATEST_RELEASE }} # Используем версию Swiper как тег для релиза
-          release_name: "Plugin Release v${{ env.LATEST_RELEASE }}" # Название релиза
+          tag_name: ${{ env.LATEST_RELEASE }} # Используем версию Swiper как тег для релиза
+          release_name: "Plugin Release v.${{ env.LATEST_RELEASE }}" # Название релиза
           body: | # Тело релиза (опционально)
             This release updates the Swiper library to version ${{ env.LATEST_RELEASE }}.
-            - Updated Swiper CSS, JS, and map files to v.${{ env.LATEST_RELEASE }}.
           draft: false # Релиз не является черновиком
           prerelease: false # Релиз не является предварительным
 
